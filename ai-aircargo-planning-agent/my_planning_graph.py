@@ -70,10 +70,10 @@ class LiteralLayer(BaseLiteralLayer):
         --------
         layers.BaseLayer.parent_layer
         """
-        print(self.parents)
-        # TODO: implement this function
-        pass
-        #raise NotImplementedError
+        literalA_actions = self.parents[literalA]
+        literalB_actions = self.parents[literalB]
+        pairs = list(product(literalA_actions, literalB_actions))
+        return all(self.parent_layer.is_mutex(*pair) for pair in pairs)
 
     def _negation(self, literalA, literalB):
         """ Return True if two literals are negations of each other """
