@@ -430,6 +430,14 @@ anything about the plane `p` or the airport `a`.
 Regression searches have the disadvantage of not allowing for the definition of
 heuristic estimation.
 
+# Partial-order Planning
+Any planning algorithm that can place two actions into a plan without specifying
+which comes first is called a partial-order planner. The partial-order solution
+corresponds to all the possible solutions of total-order plans; each of these is
+called a linearization of the partial-order plan.
+
+
+
 ## Planning Graph
 
 In the following project, you will implement a **planning graph**, which is a
