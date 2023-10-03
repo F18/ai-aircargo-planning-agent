@@ -1,5 +1,5 @@
 
-from itertools import chain, combinations
+from itertools import chain, combinations, product
 from aimacode.planning import Action
 from aimacode.utils import expr
 
@@ -21,10 +21,13 @@ class ActionLayer(BaseActionLayer):
         """
         checkA = any([a == ~b for a in actionA.effects for b in actionB.effects])
         checkB = any([b == ~a for b in actionB.effects for a in actionA.effects])
+        # same as:
+        # checkA = any([a == ~b for a, b in product(actionA.effects, actionB.effects)])
+        # checkB = any([b == ~a for a, b in product(actionB.effects, actionA.effects)])
         return checkA or checkB
 
     def _interference(self, actionA, actionB):
-        """ Return True if the effects of either action negate the preconditions of the other 
+        """ Return True if the effects of either action negate the preconditions of the other
 
         Hints:
             (1) `~Literal` can be used to logically negate a literal
@@ -50,9 +53,8 @@ class ActionLayer(BaseActionLayer):
         layers.ActionNode
         layers.BaseLayer.parent_layer
         """
-        # TODO: implement this function
-        pass
-        # raise NotImplementedError
+        pairs = list(product(actionA.preconditions, actionB.preconditions))
+        return any(self.parent_layer.is_mutex(*pair) for pair in pairs)
 
 
 class LiteralLayer(BaseLiteralLayer):
