@@ -131,7 +131,7 @@ class PlanningGraph:
             if goal not in goals_found and goal in self.literal_layers[-1]:
                 cost[goal] = level_count
                 goals_found.add(goal)
-        # Return max cost if all goals found initial layer
+        # Return cost dictionary if all goals found in initial layer
         if goals_found == self.goal:
             return cost
         # Extend planning graph until all goals found
@@ -142,11 +142,12 @@ class PlanningGraph:
                 if goal not in goals_found and goal in self.literal_layers[-1]:
                     cost[goal] = level_count
                     goals_found.add(goal)
-            # Return inifinity cost for any goals not found
+            # Return an infinite cost for any goals not found
             if self._is_leveled and goals_found != self.goal:
                 for goal in self.goal.difference(goals_found):
                     cost[goal] = float("inf")
                 return cost
+        # All goals found and costs calculated
         return cost
 
     def h_levelsum(self):
