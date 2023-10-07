@@ -115,6 +115,40 @@ class PlanningGraph:
         self.literal_layers = [layer]
         self.action_layers = []
 
+    def level_cost(self):
+        """ Computes the level cost of all goals in the planning graph and
+        stores the cost of each goal in a dictionary.
+
+        Returns:
+            cost (dict): A dictionary mapping each goal to its level cost
+        """
+        cost = {}
+        goals_found = set()
+        level_count = 0
+
+        # Check initial literal layer for any goals
+        for goal in self.goal:
+            if goal not in goals_found and goal in self.literal_layers[-1]:
+                cost[goal] = level_count
+                goals_found.add(goal)
+        # Return max cost if all goals found initial layer
+        if goals_found == self.goal:
+            return cost
+        # Extend planning graph until all goals found
+        while not self._is_leveled:
+            self._extend()
+            level_count += 1
+            for goal in self.goal:
+                if goal not in goals_found and goal in self.literal_layers[-1]:
+                    cost[goal] = level_count
+                    goals_found.add(goal)
+            # Return inifinity cost for any goals not found
+            if self._is_leveled and goals_found != self.goal:
+                for goal in self.goal.difference(goals_found):
+                    cost[goal] = float("inf")
+                return cost
+        return cost
+
     def h_levelsum(self):
         """ Calculate the level sum heuristic for the planning graph
 
@@ -140,8 +174,7 @@ class PlanningGraph:
         --------
         Russell-Norvig 10.3.1 (3rd Edition)
         """
-        # TODO: implement this function
-        raise NotImplementedError
+        return sum(self.level_cost().values())
 
     def h_maxlevel(self):
         """ Calculate the max level heuristic for the planning graph
@@ -170,31 +203,7 @@ class PlanningGraph:
         -----
         WARNING: you should expect long runtimes using this heuristic with A*
         """
-        cost = {}
-        goals_found = set()
-        level_count = 0
-
-        # Check initial literal layer for any goals
-        for goal in self.goal:
-            if goal not in goals_found and goal in self.literal_layers[-1]:
-                cost[goal] = level_count
-                goals_found.add(goal)
-        # Return max cost if all goals found initial layer
-        if goals_found == self.goal:
-            return max(cost.values())
-        # Extend planning graph until all goals found
-        while not self._is_leveled:
-            self._extend()
-            level_count += 1
-            for goal in self.goal:
-                if goal not in goals_found and goal in self.literal_layers[-1]:
-                    cost[goal] = level_count
-                    goals_found.add(goal)
-            # Return inifinity if all goals not found and planning graph is leveled
-            if self._is_leveled and goals_found != self.goal:
-                return float("inf")
-
-        return max(cost.values())
+        return max(self.level_cost().values())
 
     def h_setlevel(self):
         """ Calculate the set level heuristic for the planning graph
