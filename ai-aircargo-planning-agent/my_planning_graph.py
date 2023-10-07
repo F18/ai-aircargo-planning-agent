@@ -126,28 +126,29 @@ class PlanningGraph:
         goals_found = set()
         level_count = 0
 
-        # Check initial literal layer for any goals
-        for goal in self.goal:
-            if goal not in goals_found and goal in self.literal_layers[-1]:
-                cost[goal] = level_count
-                goals_found.add(goal)
-        # Return cost dictionary if all goals found in initial layer
-        if goals_found == self.goal:
-            return cost
-        # Extend planning graph until all goals found
-        while not self._is_leveled:
-            self._extend()
-            level_count += 1
+        # Loop until any one of the following conditins are satisfied:
+        # 1. return: if all goals have been found
+        # 2. break: if graph has been leveled
+        while True:
+            # Check current literal layer for any goals and compute cost
             for goal in self.goal:
                 if goal not in goals_found and goal in self.literal_layers[-1]:
                     cost[goal] = level_count
                     goals_found.add(goal)
-            # Return an infinite cost for any goals not found
-            if self._is_leveled and goals_found != self.goal:
-                for goal in self.goal.difference(goals_found):
-                    cost[goal] = float("inf")
+            # Return cost dictionary if all goals found
+            if goals_found == self.goal:
                 return cost
-        # All goals found and costs calculated
+            # Exit loop if graph is leveled
+            if self._is_leveled:
+                break
+            # Extend graph to the next layer
+            self._extend()
+            level_count += 1
+
+        # Graph is leveled; assign an infinite cost to goals that were not
+        # found
+        for goal in self.goal.difference(goals_found):
+            cost[goal] = float("inf")
         return cost
 
     def h_levelsum(self):
@@ -232,27 +233,28 @@ class PlanningGraph:
         level_count = 0
         pairs = list(product(self.goal, self.goal))
 
-        # Check initial literal layer for any goals
-        for goal in self.goal:
-            if goal not in goals_found and goal in self.literal_layers[-1]:
-                goals_found.add(goal)
-        # Return set level cost of zero if all goals found in initial layer and
-        # no pair of goals are mutex
-        goals_are_mutex = any(self.literal_layers[-1]._inconsistent_support(*pair) for pair in pairs)
-        if goals_found == self.goal and not goals_are_mutex:
-            return level_count
-        # Extend planning graph until all goals found
-        while not self._is_leveled:
-            self._extend()
-            level_count += 1
+        # Loop until any one of the following conditins are satisfied:
+        # 1. return: if all goals have been found and no pairs of goals are mutex
+        # 2. break: if graph has been leveled
+        while True:
+            # Check current literal layer for any goals
             for goal in self.goal:
                 if goal not in goals_found and goal in self.literal_layers[-1]:
                     goals_found.add(goal)
             # Return set level cost if all goals found in current layer and no
             # goals are mutex
-            goals_are_mutex = any(self.literal_layers[-1]._inconsistent_support(*pair) for pair in pairs)
+            goals_are_mutex = any(
+                self.literal_layers[-1]._inconsistent_support(*pair) for pair in pairs
+            )
             if goals_found == self.goal and not goals_are_mutex:
                 return level_count
+            # Exit loop if graph is leveled
+            if self._is_leveled:
+                break
+            # Extend graph to the next layer
+            self._extend()
+            level_count += 1
+
         # Return an infinite cost if graph is leveled and not all goals were
         # found, or if graph is leveled and any pair of goals are mutex
         return float("inf")
