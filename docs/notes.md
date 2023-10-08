@@ -6,11 +6,11 @@ These strategies have no additional information about states beyond that
 provided in the problem definition, so they can only proceed by generating
 successors until they find a goal state.
 
-### Types of Uniform Search
+### Types of Uninformed Search
 
 - **Breadth-first Search (BFS)** is a search strategy that expands the
   shallowest unexpanded node first. BFS expands the root node, then explores all
-  the children of the root node, and so on. It is gauranteed to find the
+  the children of the root node, and so on. It is guaranteed to find the
   shortest past.
 - **Depth-first Search (DFS)** applies a similar search strategy as BFS but
   expands the deepest node in the current frontier of the search tree. DFS
@@ -22,19 +22,19 @@ successors until they find a goal state.
 - **Uniform Cost Search (UCS)** is a search strategy that expands the successor
   node with the cheapest cost. It's also called **Cheapest-First Search**. In a
   route finding problem, the cheapest cost could be defined as the shortest
-  distance (in miles) between two cities. The reason it is gauranteed to find
+  distance (in miles) between two cities. The reason it is guaranteed to find
   the cheapest path to the goal is because you do not add the goal the first
   time you reach it on a given path. Instead you wait until all other cheaper
   paths have been explored, at which point the goal state would be the next to
   expand. You don't need to actually expand it, but that tells you that the
   algorithm is complete and has found the cheapest path. Awesome!
 
-### Terminology:
+### Terminology
 
-- **Optimal Search**: an optimal search is one that is **gauranteed** to find
+- **Optimal Search**: an optimal search is one that is **guaranteed** to find
   the shortest or cheapest path to the goal.
-- **Complete Search**: a complete search is gauranteed to find a goal. Depth
-first search is not gauranteed since if one of the paths is keeps going deeper
+- **Complete Search**: a complete search is guaranteed to find a goal. Depth
+first search is not guaranteed since if one of the paths is keeps going deeper
 and deeper (indefinitely) it will never find the goal when it exists in a
 different branch of the tree.
 - **Tree vs Graph Search**: A tree search is a formal description of the available
@@ -132,7 +132,7 @@ The search we are talking about here works given the following conditions:
 2. **Known**: Must know the set of available actions to us
 3. **Discrete**: Must be a finite number of actions to choose from
 4. **Deterministic**: Must know the resul tof taking an action
-5. **Sattic**: Must be nothing else that can change the world other than our own action
+5. **Static**: Must be nothing else that can change the world other than our own action
 
 ## Suggested Readings
 - Dijkstra's algorithm vs UCS
@@ -575,12 +575,4 @@ good deal of interaction among subplans.
 
 
 $\hspace{4cm}$
-
-
-# Hello world
-
-
-
-
-
 
