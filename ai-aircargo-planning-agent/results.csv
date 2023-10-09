@@ -1,5 +1,0 @@
-"Problem" "Actions" "Expansions" "Goal Tests" "New Nodes" "Plan Length" "Time"
-ac1-BFS     20          43          56         178   6   0.038287994990241714
-ac1-DFS     20          21          22          84   20  0.008904777001589537
-ac1-UCS     20          60          62         240   6   0.026188554998952895
-ac1-GBS     20          7           9           29   6   0.0036509780038613826
