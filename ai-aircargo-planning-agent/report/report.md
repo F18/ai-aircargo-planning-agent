@@ -102,12 +102,22 @@ the sections that follow.**
 ## Search Complexity Studies
 
 In this section, I analyze the search complexity as a function of domain size,
-search algorithm, and heuristic.
+search algorithm, and heuristic. In the figure below, I plot the number of
+expansions against the number of actions. The number of available **actions** in
+the planning graph represents the complexity of the problem (how many aircraft,
+airports, and pieces of cargo are involved), whereas the number of
+**expansions** represents the efficiency and scalability of the algorithm
+(search and heuristic).
+
+Note: In this section, I have not considered **optimality**. In other words, this figure says
+nothing about whether or not each algorithm was able to find the optimal path.
+
+![expansions](expansions_vs_actions.png)
 
 ## Search Time Studies
 
 In this section, I analyze the search time as a function of domain size, search
-algorithm, and heuristic.
+algorithm, and heuristic. I plot the number
 
 ## Search Optimality Studies
 
