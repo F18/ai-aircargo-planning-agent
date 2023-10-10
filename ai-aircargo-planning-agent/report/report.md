@@ -1,11 +1,19 @@
-# Project Report: Air Cargo Planning Agent
+---
+ title: "Project Report: Air Cargo Planning Agent"
+ author: Ramy Rashad
+ numbersections: true
+ geometry: margin=0.75in
+---
+<!-- date: Oct. 10, 2023 ..>
+
+<!-- # Project Report: Air Cargo Planning Agent -->
 
 In this project, I consider a forward planning agent to solve four air cargo
 planning problems, each with increasing complexity. I explore various uninformed
 search algorithms, as well as informed search algorithms in combination with
 various heuristics.
 
-## Problem Labels
+# Problem Labels
 
 The following table provides some useful labels that will be used to identify
 the various air cargo planning problems explored in this report:
@@ -17,7 +25,7 @@ the various air cargo planning problems explored in this report:
 | p3 | Air Cargo Problem 3 |
 | p4 | Air Cargo Problem 4 |
 
-## Algorithm Labels
+# Algorithm Labels
 
 The following table provides some useful labels that will be used to identify
 the various algorithms explored in this report:
@@ -36,11 +44,15 @@ the various algorithms explored in this report:
 | as-max | A* Search | Max Level |
 | as-set | A* Search | Set Level |
 
-## Results
+# Results
 
 In this section, the data collected from exploring the various problems and
-algorithms are presented in table format. **Results are discussed and analyzed in
-the sections that follow.**
+algorithms are presented in table format. **Results are discussed and analyzed
+in the sections that follow.** Note that based on findings from `p1` and `p2`,
+the `dfs` algorithm was not executed for `p4`, primarily due to its inability in
+finding the optimal path. I would have also excluded the `as-max` and `as-set`
+algorithms based on their computational expense, but I decided to run them
+anyway, just for fun.
 
 | Problem | Label | Actions | Expansions | Goal Tests | New Nodes | Plan Length | Time |
 | :---: | --- | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -98,45 +110,82 @@ the sections that follow.**
 | p4 | as-max | 104 | 62077 | 62079 | 599376 | 14 | 6.51E+03 |
 | p4 | as-set | 104 | 37912 | 37914 | 373328 | 14 | 3.14E+04 |
 
+## Complexity Studies
 
-## Search Complexity Studies
+In this section, the search complexity is analyzed as a function of domain size,
+search algorithm, and heuristic. In Figure \ref{expansions}, the number of
+expansions is plotted against the number of actions. Note that the number of
+available **actions** in the planning graph represents the complexity of the
+problem (how many aircraft, airports, and pieces of cargo are involved), whereas
+the number of **expansions** represents the efficiency and scalability of the
+algorithm (search and heuristic).
 
-In this section, I analyze the search complexity as a function of domain size,
-search algorithm, and heuristic. In the figure below, I plot the number of
-expansions against the number of actions. The number of available **actions** in
-the planning graph represents the complexity of the problem (how many aircraft,
-airports, and pieces of cargo are involved), whereas the number of
-**expansions** represents the efficiency and scalability of the algorithm
-(search and heuristic).
+A planning agent that expands fewer number of nodes is generally considered more
+efficient. The smaller the slope in Figure \ref{time}, the better the given
+algorithm will scale as the domain size increases. Note that this plot does not
+say anything about **optimality**, that is, whether or not each algorithm was
+able to find the optimal path.
 
-Note: In this section, I have not considered **optimality**. In other words, this figure says
-nothing about whether or not each algorithm was able to find the optimal path.
+![Expansions vs. Actions \label{expansions}](expansions_vs_actions.png)
 
-![expansions](expansions_vs_actions.png)
+## Time Studies
 
-## Search Time Studies
+In this section, the search time is analyzed as a function of domain size,
+search algorithm, and heuristic. In Figure \ref{time}, the number of expansions
+is plotted against the number of actions. Note that the number of available
+**actions** in the planning graph represents the complexity of the problem (how
+many aircraft, airports, and pieces of cargo are involved), whereas the **time**
+represents the efficiency and scalability of the algorithm (search and
+heuristic).
 
-In this section, I analyze the search time as a function of domain size, search
-algorithm, and heuristic. I plot the number
+A planning agent that requires less computational time is generally considered
+more computationally efficient. The smaller the slope in Figure \ref{time}, the
+better the given algorithm will scale as the domain size increases. Note that
+this plot does not say anything about **optimality**, that is, whether or not
+each algorithm was able to find the optimal path.
 
-## Search Optimality Studies
+![Time vs. Actions \label{time}](time_vs_actions.png)
 
-In this section, I analyze the solution optimality as a function of domain
-size, search algorithm, and heuristic.
+## Optimality Studies
 
-## Q & A
+In this section, the solution optimality is analyzed as a function of domain
+size, search algorithm, and heuristic. In Table \ref{length}, the computed plan length is provided for each algorithm and each problem.
+
+Table: Computed Plan Lengths \label{length}
+
+| Algorithm | p1  | p2   | p3   | p4   |
+|-----------|:---:|:----:|:----:|:----:|
+| bfs       | 6.0 | 9.0  | 12.0 | 14.0 |
+| dfs       | 20.0| 619.0| 392.0| -    |
+| ucs       | 6.0 | 9.0  | 12.0 | 14.0 |
+| gb-unmet  | 6.0 | 9.0  | 15.0 | 18.0 |
+| gb-level  | 6.0 | 9.0  | 14.0 | 17.0 |
+| gb-max    | 6.0 | 9.0  | 13.0 | 17.0 |
+| gb-set    | 7.0 | 10.0 | 18.0 | 24.0 |
+| as-unmet  | 6.0 | 9.0  | 12.0 | 14.0 |
+| as-level  | 6.0 | 9.0  | 12.0 | 15.0 |
+| as-max    | 6.0 | 9.0  | 12.0 | 14.0 |
+| as-set    | 6.0 | 9.0  | 12.0 | 14.0 |
+
+Since we know that the `bfs` is guaranteed to find the optimal path, we can
+examine that row in the table to know the optimal path for each problem. It is
+also immediately clear that the `dfs` algorithm struggles to find the optimal
+path for all problems studied. 
+
+The following algorithms were able to find the optimal path for all problems: bfs, ucs, as-unmet, as-max, and as-set.
+
+# Q & A
 
 In this section, I answer some questions regarding the appropriateness of the various methods given different considerations on domain size and optimality.
 
-### Question 1
+## Question 1
 
 *Which algorithm or algorithms would be most appropriate for planning in a very
 restricted domain (i.e., one that has only a few actions) and needs to operate
 in real time?*
 
-AS
 
-### Question 2
+## Question 2
 
 *Which algorithm or algorithms would be most appropriate for planning in very
 large domains (e.g., planning delivery routes for all UPS drivers in the U.S. on
@@ -144,7 +193,7 @@ a given day)*
 
 GB
 
-### Question 3
+## Question 3
 
 *Which algorithm or algorithms would be most appropriate for planning problems where it is important to find only optimal plans?*
 
