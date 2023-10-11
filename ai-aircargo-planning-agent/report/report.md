@@ -49,8 +49,8 @@ the various algorithms explored in this report:
 In this section, the data collected from exploring the various problems and
 algorithms are presented in table format. **Results are discussed and analyzed
 in the sections that follow.** Note that based on findings from `p1` and `p2`,
-the `dfs` algorithm was not executed for `p4`, primarily due to its inability in
-finding the optimal path. I would have also excluded the `as-max` and `as-set`
+the `dfs` algorithm was not executed for `p4`, primarily due to its inability to
+find the optimal path. I would have also excluded the `as-max` and `as-set`
 algorithms based on their computational expense, but I decided to run them
 anyway, just for fun.
 
@@ -121,12 +121,14 @@ the number of **expansions** represents the efficiency and scalability of the
 algorithm (search and heuristic).
 
 A planning agent that expands fewer number of nodes is generally considered more
-efficient. The smaller the slope in Figure \ref{time}, the better the given
-algorithm will scale as the domain size increases. Note that this plot does not
-say anything about **optimality**, that is, whether or not each algorithm was
-able to find the optimal path.
+efficient. The smaller the slope in Figure \ref{expansions}, the better the
+given algorithm will scale as the domain size increases. Note that this plot
+does not say anything about **optimality**, that is, whether or not each
+algorithm was able to find the optimal path.
 
 ![Expansions vs. Actions \label{expansions}](expansions_vs_actions.png)
+
+\newpage
 
 ## Time Studies
 
@@ -146,6 +148,8 @@ each algorithm was able to find the optimal path.
 
 ![Time vs. Actions \label{time}](time_vs_actions.png)
 
+\newpage 
+
 ## Optimality Studies
 
 In this section, the solution optimality is analyzed as a function of domain
@@ -155,24 +159,28 @@ Table: Computed Plan Lengths \label{length}
 
 | Algorithm | p1  | p2   | p3   | p4   |
 |-----------|:---:|:----:|:----:|:----:|
-| bfs       | 6.0 | 9.0  | 12.0 | 14.0 |
-| dfs       | 20.0| 619.0| 392.0| -    |
-| ucs       | 6.0 | 9.0  | 12.0 | 14.0 |
-| gb-unmet  | 6.0 | 9.0  | 15.0 | 18.0 |
-| gb-level  | 6.0 | 9.0  | 14.0 | 17.0 |
-| gb-max    | 6.0 | 9.0  | 13.0 | 17.0 |
-| gb-set    | 7.0 | 10.0 | 18.0 | 24.0 |
-| as-unmet  | 6.0 | 9.0  | 12.0 | 14.0 |
-| as-level  | 6.0 | 9.0  | 12.0 | 15.0 |
-| as-max    | 6.0 | 9.0  | 12.0 | 14.0 |
-| as-set    | 6.0 | 9.0  | 12.0 | 14.0 |
+| bfs       | 6 | 9  | 12 | 14 |
+| dfs       | 20| 619| 392 | - |
+| ucs       | 6 | 9  | 12 | 14 |
+| gb-unmet  | 6 | 9  | 15 | 18 |
+| gb-level  | 6 | 9  | 14 | 17 |
+| gb-max    | 6 | 9  | 13 | 17 |
+| gb-set    | 7 | 10 | 18 | 24 |
+| as-unmet  | 6 | 9  | 12 | 14 |
+| as-level  | 6 | 9  | 12 | 15 |
+| as-max    | 6 | 9  | 12 | 14 |
+| as-set    | 6 | 9  | 12 | 14 |
 
 Since we know that the `bfs` is guaranteed to find the optimal path, we can
-examine that row in the table to know the optimal path for each problem. It is
-also immediately clear that the `dfs` algorithm struggles to find the optimal
-path for all problems studied. 
+examine that row in Table \ref{length} to determine the correct optimal values
+for each problem. The following algorithms were able to find the optimal path
+for all problems:
 
-The following algorithms were able to find the optimal path for all problems: bfs, ucs, as-unmet, as-max, and as-set.
+`bfs`, `ucs`, `as-unmet`, `as-max`, and `as-set`.
+
+It was also observed that the `dfs` algorithm struggles to find the optimal path
+for all problems studied.
+
 
 # Q & A
 
@@ -184,6 +192,13 @@ In this section, I answer some questions regarding the appropriateness of the va
 restricted domain (i.e., one that has only a few actions) and needs to operate
 in real time?*
 
+The most appropriate algorithm for planning in a very restricted domain that
+needs to operate in real time is the algorithm that has the smallest
+computational time for the smallest number of actions that we studied. In this
+case, I would select the `gb-unmet` algorithm, followed by the `ucs`, `as-set`,
+and `as-unmet`. The `dfs` algorithm is fast for restricted problems, but is
+disqualified since it was not able to find the optimal path length, even for restricted domains.
+
 
 ## Question 2
 
@@ -191,10 +206,18 @@ in real time?*
 large domains (e.g., planning delivery routes for all UPS drivers in the U.S. on
 a given day)*
 
-GB
+The most appropriate algorithm for planning in a very large domain is the 
+algorithm with the best scalability in terms of number of expansions and
+computational cost (or time). Scalability can be determined by examining the
+slope of the lines in Figures \ref{expansions} and \ref{time}. The algorithm with the overall best scalability in terms of both time and number of expansions is the `gb-unmet` and `gb-level` algorithms, however, both algorithms failed to find the optimal path for the largest domain problem, `p4`. In terms of algorithms that were able to find the optimal paths for large domains in the least amount of time, I would select the `as-set` algorithm followed closely by the `ucs` algorithm.
+
 
 ## Question 3
 
 *Which algorithm or algorithms would be most appropriate for planning problems where it is important to find only optimal plans?*
 
-BFS
+Since we know that the `bfs` algorithm is guaranteed to find the optimal path,
+we can select that algorithm as the most appropriate. That being said, the
+following algorithms were able to find the optimal path for all problems:
+
+`bfs`, `ucs`, `as-unmet`, `as-max`, and `as-set`.
