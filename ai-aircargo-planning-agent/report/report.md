@@ -8,10 +8,10 @@
 
 <!-- # Project Report: Air Cargo Planning Agent -->
 
-In this project, I consider a forward planning agent to solve four air cargo
-planning problems, each with increasing complexity. I explore various uninformed
-search algorithms, as well as informed search algorithms in combination with
-various heuristics.
+In this project, we implement and study a forward planning agent to solve four
+air cargo planning problems, each with increasing complexity. We explore various
+uninformed search algorithms, as well as informed search algorithms in
+combination with various heuristics.
 
 # Problem Labels
 
@@ -47,12 +47,11 @@ the various algorithms explored in this report:
 # Results
 
 In this section, the data collected from exploring the various problems and
-algorithms are presented in table format. **Results are discussed and analyzed
-in the sections that follow.** Note that based on findings from `p1` and `p2`,
+algorithms are presented in table format. Based on findings from `p1` and `p2`,
 the `dfs` algorithm was not executed for `p4`, primarily due to its inability to
-find the optimal path. I would have also excluded the `as-max` and `as-set`
+find the optimal path. I would have also omitted the `as-max` and `as-set`
 algorithms based on their computational expense, but I decided to run them
-anyway, just for fun.
+anyway, just for fun!
 
 | Problem | Label | Actions | Expansions | Goal Tests | New Nodes | Plan Length | Time |
 | :---: | --- | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -153,7 +152,8 @@ each algorithm was able to find the optimal path.
 ## Optimality Studies
 
 In this section, the solution optimality is analyzed as a function of domain
-size, search algorithm, and heuristic. In Table \ref{length}, the computed plan length is provided for each algorithm and each problem.
+size, search algorithm, and heuristic. In Table \ref{length}, the computed plan
+length is provided for each algorithm and each problem.
 
 Table: Computed Plan Lengths \label{length}
 
@@ -172,9 +172,9 @@ Table: Computed Plan Lengths \label{length}
 | as-set    | 6 | 9  | 12 | 14 |
 
 Since we know that the `bfs` is guaranteed to find the optimal path, we can
-examine that row in Table \ref{length} to determine the correct optimal values
-for each problem. The following algorithms were able to find the optimal path
-for all problems:
+examine the `bfs` results in Table \ref{length} to know the correct optimal
+values for each problem. As such, we can state that the following algorithms
+were able to find the optimal path for all problems:
 
 `bfs`, `ucs`, `as-unmet`, `as-max`, and `as-set`.
 
@@ -184,8 +184,6 @@ for all problems studied.
 
 # Q & A
 
-In this section, I answer some questions regarding the appropriateness of the various methods given different considerations on domain size and optimality.
-
 ## Question 1
 
 *Which algorithm or algorithms would be most appropriate for planning in a very
@@ -194,11 +192,11 @@ in real time?*
 
 The most appropriate algorithm for planning in a very restricted domain that
 needs to operate in real time is the algorithm that has the smallest
-computational time for the smallest number of actions that we studied. In this
-case, I would select the `gb-unmet` algorithm, followed by the `ucs`, `as-set`,
-and `as-unmet`. The `dfs` algorithm is fast for restricted problems, but is
-disqualified since it was not able to find the optimal path length, even for restricted domains.
-
+computational time for the smallest number of actions that we studied. Looking
+at the bottom left-hand quadrant of Figure \ref{time}, I would select the
+`gb-unmet` algorithm, followed by `ucs`, `as-set`, and `as-unmet`. The `dfs`
+algorithm is fast for restricted problems, but is disqualified since it was not
+able to find the optimal path length, even for restricted domains.
 
 ## Question 2
 
@@ -206,12 +204,18 @@ disqualified since it was not able to find the optimal path length, even for res
 large domains (e.g., planning delivery routes for all UPS drivers in the U.S. on
 a given day)*
 
-The most appropriate algorithm for planning in a very large domain is the 
+The most appropriate algorithm for planning in a very large domain is the
 algorithm with the best scalability in terms of number of expansions and
 computational cost (or time). Scalability can be determined by examining the
-slope of the lines in Figures \ref{expansions} and \ref{time}. The algorithm with the overall best scalability in terms of both time and number of expansions is the `gb-unmet` and `gb-level` algorithms, however, both algorithms failed to find the optimal path for the largest domain problem, `p4`. In terms of algorithms that were able to find the optimal paths for large domains in the least amount of time, I would select the `as-set` algorithm followed closely by the `ucs` algorithm.
+slope of the lines in Figures \ref{expansions} and \ref{time}. The algorithm
+with the overall best scalability in terms of both time and number of expansions
+is the `gb-unmet` and `gb-level` algorithms, however, both algorithms failed to
+find the optimal path for the largest domain problem, `p4`. In terms of
+algorithms that were able to find the optimal paths for large domains in the
+least amount of time, I would select the `as-set` algorithm followed closely by
+the `ucs` algorithm.
 
-
+\newpage
 ## Question 3
 
 *Which algorithm or algorithms would be most appropriate for planning problems where it is important to find only optimal plans?*
