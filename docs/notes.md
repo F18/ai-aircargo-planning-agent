@@ -1,3 +1,10 @@
+---
+ title: "Notes: Classical Search and Automated Planning"
+ author: Ramy Rashad
+ numbersections: true
+ geometry: margin=1.00in
+
+---
 # Classical Search
 
 ## Uninformed Search
@@ -61,42 +68,42 @@ they find a goal state.
 - **A$^*$ Search** - utilizes both of Uniform and greedy search to optimize with
   both the shortest path and the goal in mind.
 
-  #### A* Search
+### A* Search
 
-  Find the shortest length path while keeping while expanding the minimum number
-  of paths possible. The algorithm always chooses to expand the cheapest
-  *estimated* (full path) first.
+Find the shortest length path while keeping while expanding the minimum number
+of paths possible. The algorithm always chooses to expand the cheapest
+*estimated* (full path) first.
 
-  It tries to minimize:
+It tries to minimize:
 
-  $f = g + h$
+$f = g + h$
 
-  where:
+where:
 
-  $g$ = Known path cost (so far) to the current state/path. This helps keep the
-  path short
+$g$ = Known path cost (so far) to the current state/path. This helps keep the
+path short
 
-  $h$ = Estimated distance to the goal from current state/path. This helps keep
-  us focused on the goal (for efficiency)
+$h$ = Estimated distance to the goal from current state/path. This helps keep
+us focused on the goal (for efficiency)
 
-  A* will find the lowest cost path only if:
+A* will find the lowest cost path only if:
 
-  $h(s) <$ true cost
+$h(s) <$ true cost
 
-  In other words, $h$ should never overestimate the remaining path to the goal.
+In other words, $h$ should never overestimate the remaining path to the goal.
 
-      h should never overestimate
-      h is optimistic
-      h is admissible
+    h should never overestimate
+    h is optimistic
+    h is admissible
+
+Question: he says that A* is gauranteed to find the cheapest path is h is
+always less than the true cost because when you get to the goal, $h=0$ (since
+you know the true cost of the path)). All the other paths would have had
+higher costs, he says, but doesn't this assume that $h$ is equally and
+consistently optimistic **to the same degree** for every path in the tree? How
+can that be true? 
   
-  Question: he says that A* is gauranteed to find the cheapest path is h is
-  always less than the true cost because when you get to the goal, $h=0$ (since
-  you know the true cost of the path)). All the other paths would have had
-  higher costs, he says, but doesn't this assume that $h$ is equally and
-  consistently optimistic **to the same degree** for every path in the tree? How
-  can that be true? 
-  
-#### Heuristics
+### Heuristics
 
 When creating heuristics we want them to be as accurate to the actual cost
 remaining, but never to overestimate the cost. If they are always less than the
@@ -109,7 +116,7 @@ relaxes some of the constraints on how you can move around the tree, usually
 introducing more choices. The exact cost of a solution to this easier problem
 then becomes the heuristic for the original problem.
 
-#### Paths defined as Nodes
+### Paths defined as Nodes
 
 When creating an algorithm, we define a path as a data model containing certain
 information. For example:
@@ -135,11 +142,10 @@ The search we are talking about here works given the following conditions:
 5. **Static**: Must be nothing else that can change the world other than our own action
 
 ## Suggested Readings
-- Dijkstra's algorithm vs UCS
-http://www.ise.bgu.ac.il/faculty/felner/papers/2011/socs/dikstra.pdf
-- Variants of A*: http://theory.stanford.edu/~amitp/GameProgramming/Variations.html
-- Jump Point Search (can be 100x faster than A*): 
-https://en.wikipedia.org/wiki/Jump_point_search
+
+- [Dijkstra's algorithm vs UCS](http://www.ise.bgu.ac.il/faculty/felner/papers/2011/socs/dikstra.pdf)
+- [Variants of A*:](http://theory.stanford.edu/~amitp/GameProgramming/Variations.html)
+- [Jump Point Search (can be 100x faster than A*):](https://en.wikipedia.org/wiki/Jump_point_search)
 
 # Propositional Logic
 
@@ -567,7 +573,33 @@ the max-level heuristic and works extremely well on tasks in which there is a
 good deal of interaction among subplans.
 
 
+## Automated Planning References
+The resources here may be useful if you're interested in learning more about
+state of the art search algorithms.
 
+### Software Libraries
+- [Europa](https://github.com/nasa/europa/wiki/Europa-Examples) & [NDDL](https://github.com/nasa/europa/wiki/NDDL-Reference) - Open Source planner & planning language from NASA
+- [LAPKT](http://lapkt.org/index.php?title=Main_Page) - C++planning tools
+
+### Readings
+
+- AIMA Chapter 11
+- [Planning info page](https://frnsys.com/ai_notes/artificial_intelligence/planning.html)
+- [Planning as heuristic search](http://www.cs.toronto.edu/~sheila/2542/s14/A1/bonetgeffner-heusearch-aij01.pdf)
+- [Current trends in automated planning](https://www.aaai.org/ojs/index.php/aimagazine/article/view/2067)
+- [Comparison of STRIPS, PDDL, ADL](http://www.cogsys.wiai.uni-bamberg.de/teaching/ws0405/s_planning/slides/Introduction_AI_Planning_addon.pdf)
+- Goal Oriented Action Programming: [GOAP](http://alumni.media.mit.edu/~jorkin/goap.html)
+- New Trends in Constraint Satisfaction, Planning, and Scheduling: A Survey; Bartak, Salido, Rossi (2004)
+- [A Survey of Tractable Constraint Satisfaction Problems](https://www.researchgate.net/profile/Peter_Jeavons/publication/2286111_A_Survey_of_Tractable_Constraint_Satisfaction_Problems/links/0fcfd50f9cc5d7acb6000000/A-Survey-of-Tractable-Constraint-Satisfaction-Problems.pdf), Pearson & Jeavons, 1997
+- Foundations of Constraint Satisfaction: The Classic Text, Edward Tsang (1996)
+
+### Other
+
+- [Planning with MCTS w/ UCT](http://ggp.stanford.edu/readings/uct.pdf) ← Alternative to classical planning
+- Classical planning outperforms deep Q-learning in Atari games
+    - [classical planning (2015)](http://people.eng.unimelb.edu.au/nlipovetzky/papers/iw-atari-ijcai-2015.pdf)
+    - [DQL 2013](https://arxiv.org/pdf/1312.5602v1.pdf)
+    - [DQL 2015](http://web.stanford.edu/class/psych209/Readings/MnihEtAlHassibis15NatureControlDeepRL.pdf)
 
 
 

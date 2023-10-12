@@ -53,6 +53,7 @@ find the optimal path. I would have also omitted the `as-max` and `as-set`
 algorithms based on their computational expense, but I decided to run them
 anyway, just for fun!
 
+\newpage
 | Problem | Label | Actions | Expansions | Goal Tests | New Nodes | Plan Length | Time |
 | :---: | --- | :---: | :---: | :---: | :---: | :---: | :---: |
 | p1 | bfs | 20 | 43 | 56 | 178 | 6 | 3.83E-02 |
