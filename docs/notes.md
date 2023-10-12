@@ -1,3 +1,10 @@
+---
+ title: "Notes: Classical Search and Automated Planning"
+ author: Ramy Rashad
+ numbersections: true
+ geometry: margin=1.00in
+
+---
 # Classical Search
 
 ## Uninformed Search
@@ -6,11 +13,11 @@ These strategies have no additional information about states beyond that
 provided in the problem definition, so they can only proceed by generating
 successors until they find a goal state.
 
-### Types of Uniform Search
+### Types of Uninformed Search
 
 - **Breadth-first Search (BFS)** is a search strategy that expands the
   shallowest unexpanded node first. BFS expands the root node, then explores all
-  the children of the root node, and so on. It is gauranteed to find the
+  the children of the root node, and so on. It is guaranteed to find the
   shortest past.
 - **Depth-first Search (DFS)** applies a similar search strategy as BFS but
   expands the deepest node in the current frontier of the search tree. DFS
@@ -22,19 +29,19 @@ successors until they find a goal state.
 - **Uniform Cost Search (UCS)** is a search strategy that expands the successor
   node with the cheapest cost. It's also called **Cheapest-First Search**. In a
   route finding problem, the cheapest cost could be defined as the shortest
-  distance (in miles) between two cities. The reason it is gauranteed to find
+  distance (in miles) between two cities. The reason it is guaranteed to find
   the cheapest path to the goal is because you do not add the goal the first
   time you reach it on a given path. Instead you wait until all other cheaper
   paths have been explored, at which point the goal state would be the next to
   expand. You don't need to actually expand it, but that tells you that the
   algorithm is complete and has found the cheapest path. Awesome!
 
-### Terminology:
+### Terminology
 
-- **Optimal Search**: an optimal search is one that is **gauranteed** to find
+- **Optimal Search**: an optimal search is one that is **guaranteed** to find
   the shortest or cheapest path to the goal.
-- **Complete Search**: a complete search is gauranteed to find a goal. Depth
-first search is not gauranteed since if one of the paths is keeps going deeper
+- **Complete Search**: a complete search is guaranteed to find a goal. Depth
+first search is not guaranteed since if one of the paths is keeps going deeper
 and deeper (indefinitely) it will never find the goal when it exists in a
 different branch of the tree.
 - **Tree vs Graph Search**: A tree search is a formal description of the available
@@ -61,42 +68,42 @@ they find a goal state.
 - **A$^*$ Search** - utilizes both of Uniform and greedy search to optimize with
   both the shortest path and the goal in mind.
 
-  #### A* Search
+### A* Search
 
-  Find the shortest length path while keeping while expanding the minimum number
-  of paths possible. The algorithm always chooses to expand the cheapest
-  *estimated* (full path) first.
+Find the shortest length path while keeping while expanding the minimum number
+of paths possible. The algorithm always chooses to expand the cheapest
+*estimated* (full path) first.
 
-  It tries to minimize:
+It tries to minimize:
 
-  $f = g + h$
+$f = g + h$
 
-  where:
+where:
 
-  $g$ = Known path cost (so far) to the current state/path. This helps keep the
-  path short
+$g$ = Known path cost (so far) to the current state/path. This helps keep the
+path short
 
-  $h$ = Estimated distance to the goal from current state/path. This helps keep
-  us focused on the goal (for efficiency)
+$h$ = Estimated distance to the goal from current state/path. This helps keep
+us focused on the goal (for efficiency)
 
-  A* will find the lowest cost path only if:
+A* will find the lowest cost path only if:
 
-  $h(s) <$ true cost
+$h(s) <$ true cost
 
-  In other words, $h$ should never overestimate the remaining path to the goal.
+In other words, $h$ should never overestimate the remaining path to the goal.
 
-      h should never overestimate
-      h is optimistic
-      h is admissible
+    h should never overestimate
+    h is optimistic
+    h is admissible
+
+Question: he says that A* is gauranteed to find the cheapest path is h is
+always less than the true cost because when you get to the goal, $h=0$ (since
+you know the true cost of the path)). All the other paths would have had
+higher costs, he says, but doesn't this assume that $h$ is equally and
+consistently optimistic **to the same degree** for every path in the tree? How
+can that be true? 
   
-  Question: he says that A* is gauranteed to find the cheapest path is h is
-  always less than the true cost because when you get to the goal, $h=0$ (since
-  you know the true cost of the path)). All the other paths would have had
-  higher costs, he says, but doesn't this assume that $h$ is equally and
-  consistently optimistic **to the same degree** for every path in the tree? How
-  can that be true? 
-  
-#### Heuristics
+### Heuristics
 
 When creating heuristics we want them to be as accurate to the actual cost
 remaining, but never to overestimate the cost. If they are always less than the
@@ -109,7 +116,7 @@ relaxes some of the constraints on how you can move around the tree, usually
 introducing more choices. The exact cost of a solution to this easier problem
 then becomes the heuristic for the original problem.
 
-#### Paths defined as Nodes
+### Paths defined as Nodes
 
 When creating an algorithm, we define a path as a data model containing certain
 information. For example:
@@ -132,14 +139,13 @@ The search we are talking about here works given the following conditions:
 2. **Known**: Must know the set of available actions to us
 3. **Discrete**: Must be a finite number of actions to choose from
 4. **Deterministic**: Must know the resul tof taking an action
-5. **Sattic**: Must be nothing else that can change the world other than our own action
+5. **Static**: Must be nothing else that can change the world other than our own action
 
 ## Suggested Readings
-- Dijkstra's algorithm vs UCS
-http://www.ise.bgu.ac.il/faculty/felner/papers/2011/socs/dikstra.pdf
-- Variants of A*: http://theory.stanford.edu/~amitp/GameProgramming/Variations.html
-- Jump Point Search (can be 100x faster than A*): 
-https://en.wikipedia.org/wiki/Jump_point_search
+
+- [Dijkstra's algorithm vs UCS](http://www.ise.bgu.ac.il/faculty/felner/papers/2011/socs/dikstra.pdf)
+- [Variants of A*:](http://theory.stanford.edu/~amitp/GameProgramming/Variations.html)
+- [Jump Point Search (can be 100x faster than A*):](https://en.wikipedia.org/wiki/Jump_point_search)
 
 # Propositional Logic
 
@@ -284,7 +290,9 @@ A `Partially Observable Space` is one in which you might be able to know locally
 what is happening around you, for example the vacuum does know if the space is
 dirty/clean AND it knows what space it is in (Left or Right). It can then act
 (make a move) and then observe. After each observation we can learn more about
-the space.  The belief state will either stay the same size, or it will shrink in size due to the knowledge gained (or not gained) by the observation. Performing the observation will not hurt our understanding.
+the space.  The belief state will either stay the same size, or it will shrink
+in size due to the knowledge gained (or not gained) by the observation.
+Performing the observation will not hurt our understanding.
 
 In a `Stochastic Partially Observable Space` the belief space is larger due to
 multiple possibilities. In this situation, actions tend to increase uncertainty
@@ -430,6 +438,14 @@ anything about the plane `p` or the airport `a`.
 Regression searches have the disadvantage of not allowing for the definition of
 heuristic estimation.
 
+# Partial-order Planning
+Any planning algorithm that can place two actions into a plan without specifying
+which comes first is called a partial-order planner. The partial-order solution
+corresponds to all the possible solutions of total-order plans; each of these is
+called a linearization of the partial-order plan.
+
+
+
 ## Planning Graph
 
 In the following project, you will implement a **planning graph**, which is a
@@ -472,9 +488,118 @@ layers: S0, A0, S1, A1, S2, A2, S3, A3. If the algorithm finds the conjunction
 goals at S2 and S3, we can say the cost or level-sum heuristic estimation is 5
 (=2 + 3).
 
+## Components of a Plan
+
+1. **Actions**: A set of actions that make up the steps of the plan. These are
+taken from the set of actions in the planning problem. The “empty” plan contains
+just the Start and Finish actions. Start has no preconditions and has as its
+effect all the literals in the initial state of the planning problem. Finish has
+no effects and has as its preconditions the goal literals of the planning
+problem.
+
+2. **Ordering Constraints:** A set of ordering constraints. Each ordering
+constraint is of the form A ≺ B, which is read as “A before B” and means that
+action A must be executed sometime before ac- tion B, but not necessarily
+immediately before. The ordering constraints must describe a proper partial
+order. Any cycle—such as A ≺ B and B ≺ A—represents a contradic- tion, so an
+ordering constraint cannot be added to the plan if it creates a cycle.
+
+3. **Causal Links (and Conflicts):** A set of causal links. A causal link
+between two actions A and B in the plan is written as A → p B and is read as *A
+achieves p for B*. For example, the causal link RightSockOn RightSock →
+RightShoe asserts that RightSockOn is an effect of the RightSock action and a
+precondition of RightShoe. It also asserts that RightSockOn must remain true
+from the time of ac- tion RightSock to the time of action RightShoe. In other
+words, the plan may not be extended by adding a new action C that conflicts with
+the causal link. An action C conflicts with A → p B if C has the effect ¬p and
+if Ccould (according to the ordering constraints) come after A and before B.
+Some authors call causal links protection intervals, because the link A → p B
+protects p from being negated over the interval from A to B.
+
+4. **Open Preconditions:** A set of open preconditions. A precondition is open
+   if it is not achieved by some action in the plan. Planners will work to
+   reduce the set of open preconditions to the empty set, without introducing a
+   contradiction.
 
 
+## Planning Graphs for Heuristic Estimation
 
+A planning graph, once constructed, is a rich source of information about the
+problem. For example, a literal that does not appear in the final level of the
+graph cannot be achieved by any plan. This observation can be used in backward
+search as follows: any state containing an unachievable literal has a cost h(n)
+= ∞. Similarly, in partial-order planning, any plan with an unachievable open
+condition has h(n) = ∞.
+
+**Level Cost Heuristic:** 
+
+The cost of each Literal (multiple literals per state) is simply the how many steps it would take to get to the goal state. If you're only one action away from achieving your goal, then your level cost is 1. It does not account for how many possible actions there are, but only how many steps you are away from the goal.
+
+The level cost is a helper function used by MaxLevel and LevelSum. The level
+cost of a goal is equal to the level number of the first literal layer in the
+planning graph where the goal literal appears.
+
+**Serial Planning Graph:**
+
+A serial graph insists that only one action can actually occur at any given time
+step; this is done by adding mutex links between every pair of actions except
+persistence actions. Level costs extracted from serial graphs are often quite
+reasonable estimates of actual costs.
+
+### Estimating the cost of a conjunction (multiple simultaneous) of goals
+
+**Max-Level Heuristic:** Calculates the cost to reach each goal and takes the maximum as the cost for the given level. Admissable, but not bery accurate.
+
+**Level-Sum Heuristic:** Returns the sum of the level-costs of the goals. This
+is inadmissable (since it may overpredict the cost) but works well in practices
+for problems that are largely decomposable.
+
+       The level sum is the sum of the level costs of all the goal literals
+       combined. The "level cost" to achieve any single goal literal is the
+       level at which the literal first appears in the planning graph. Note
+       that the level cost is **NOT** the minimum number of actions to
+       achieve a single goal literal.
+       
+       For example, if Goal_1 first appears in level 0 of the graph (i.e.,
+       it is satisfied at the root of the planning graph) and Goal_2 first
+       appears in level 3, then the levelsum is 0 + 3 = 3.
+
+
+**Set-Level Heuristic:** Finds the level at which all the literals in the
+conjunctive goal appear in the planning graph without any pair of them being
+mutually exclusive. This heuristic gives the correct values of 2 for our
+original problem and infinity for the problem without Bake(Cake). It dominates
+the max-level heuristic and works extremely well on tasks in which there is a
+good deal of interaction among subplans.
+
+
+## Automated Planning References
+The resources here may be useful if you're interested in learning more about
+state of the art search algorithms.
+
+### Software Libraries
+- [Europa](https://github.com/nasa/europa/wiki/Europa-Examples) & [NDDL](https://github.com/nasa/europa/wiki/NDDL-Reference) - Open Source planner & planning language from NASA
+- [LAPKT](http://lapkt.org/index.php?title=Main_Page) - C++planning tools
+
+### Readings
+
+- AIMA Chapter 11
+- [Planning info page](https://frnsys.com/ai_notes/artificial_intelligence/planning.html)
+- [Planning as heuristic search](http://www.cs.toronto.edu/~sheila/2542/s14/A1/bonetgeffner-heusearch-aij01.pdf)
+- [Current trends in automated planning](https://www.aaai.org/ojs/index.php/aimagazine/article/view/2067)
+- [Comparison of STRIPS, PDDL, ADL](http://www.cogsys.wiai.uni-bamberg.de/teaching/ws0405/s_planning/slides/Introduction_AI_Planning_addon.pdf)
+- Goal Oriented Action Programming: [GOAP](http://alumni.media.mit.edu/~jorkin/goap.html)
+- New Trends in Constraint Satisfaction, Planning, and Scheduling: A Survey; Bartak, Salido, Rossi (2004)
+- [A Survey of Tractable Constraint Satisfaction Problems](https://www.researchgate.net/profile/Peter_Jeavons/publication/2286111_A_Survey_of_Tractable_Constraint_Satisfaction_Problems/links/0fcfd50f9cc5d7acb6000000/A-Survey-of-Tractable-Constraint-Satisfaction-Problems.pdf), Pearson & Jeavons, 1997
+- Foundations of Constraint Satisfaction: The Classic Text, Edward Tsang (1996)
+
+### Other
+
+- [Planning with MCTS w/ UCT](http://ggp.stanford.edu/readings/uct.pdf) ← Alternative to classical planning
+- Classical planning outperforms deep Q-learning in Atari games
+    - [classical planning (2015)](http://people.eng.unimelb.edu.au/nlipovetzky/papers/iw-atari-ijcai-2015.pdf)
+    - [DQL 2013](https://arxiv.org/pdf/1312.5602v1.pdf)
+    - [DQL 2015](http://web.stanford.edu/class/psych209/Readings/MnihEtAlHassibis15NatureControlDeepRL.pdf)
 
 
 
@@ -482,12 +607,4 @@ goals at S2 and S3, we can say the cost or level-sum heuristic estimation is 5
 
 
 $\hspace{4cm}$
-
-
-# Hello world
-
-
-
-
-
 

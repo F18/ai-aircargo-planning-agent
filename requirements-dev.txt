@@ -1,0 +1,8 @@
+pandas
+pytest
+pytest-cov
+flake8
+black
+pre-commit
+udacity-pa
+notebook
